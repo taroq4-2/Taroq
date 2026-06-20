@@ -26,6 +26,14 @@ jobs:
           yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses > /dev/null 2>&1 || true
           $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager "platforms;android-34" "build-tools;34.0.0"
 
+      - name: Install Gradle 8.4 and regenerate wrapper
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.4'
+
+      - name: Generate wrapper jar
+        run: gradle wrapper --gradle-version=8.4 --distribution-type=bin
+
       - name: Make gradlew executable
         run: chmod +x gradlew
 
